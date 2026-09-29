@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Story Reading Assessment — V5.36</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=4.5.36">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">Phil-IRI Assesment</div>
+        <h1>Read aloud</h1>
+      </div>
+      <div class="top-actions">
+        <label class="locale-label" hidden>Language
+          <select id="locale">
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="en-PH">English (Philippines)</option>
+            <option value="fil-PH">Filipino (Philippines)</option>
+          </select>
+        </label>
+        <button id="diagBtn" class="ghost icon-btn" title="Diagnostics">⚙️</button>
+        <span class="status-pill" id="statusPill">Ready</span>
+      </div>
+    </header>
+
+    <section class="top-metrics" aria-label="Reading setup">
+      <div class="metric"><span>TIME</span><strong id="timer">00:00</strong></div>
+      <div class="metric"><span>STORY WORDS</span><strong id="storyWordCount">0</strong></div>
+            <button class="metric metric-button" id="editStoryBtn"><span>PASSAGE</span><strong>Edit</strong></button>
+    </section>
+
+    <section class="reader-card">
+      <div class="reader-toolbar">
+        <div class="toolbar-status">
+          <span class="dot" id="vadDot"></span>
+          <span id="hint">Ready. Press Start and read the passage.</span>
+        </div>
+        <div class="mic-meter" aria-label="Microphone activity"><div id="meterBar"></div></div>
+      </div>
+
+      <textarea id="storyEditor" class="story-editor" hidden></textarea>
+
+      <div class="reader-grid">
+        <section class="reading-pane" aria-label="Expected story">
+          <div class="pane-heading">
+            <div><span class="pane-kicker">EXPECTED STORY</span><span class="pane-sub">Reference passage · kept clean</span></div>
+            <span class="word-count-badge" id="wordBadge">0 words</span>
+          </div>
+          <article id="story" class="story">On a quiet Saturday morning, Maya walked to the old garden behind her grandmother’s house. The gate was covered with vines, but a narrow path still led to a small wooden bench. Maya sat there for a moment and listened to the birds singing in the trees. Then she noticed a tiny blue bird hopping beside a fallen flower. She waited patiently until the bird picked up a petal and carried it toward a nest. Maya smiled and realized that even in a familiar place, there could always be something new to discover.</article>
+        </section>
+
+        <section class="reading-pane transcript-pane" aria-label="Spoken transcript and Azure assessment">
+          <div class="pane-heading">
+            <div><span class="pane-kicker">TRANSCRIPT / AZURE</span><span class="pane-sub">OpenAI live transcript + Azure pronunciation evidence</span></div>
+            <span class="live-badge" id="liveBadge">Realtime</span>
+          </div>
+          <div id="transcript" class="transcript" aria-live="polite">
+            <span class="empty-state">Your spoken words will appear here while you read.</span>
+          </div>
+          <div id="transcriptNotice" class="transcript-notice" hidden></div>
+        </section>
+      </div>
+
+      <div class="action-buttons">
+        <button id="startBtn" class="primary">▶ Start</button>
+        <button id="stopBtn" class="secondary" disabled>⏹ Stop</button>
+        <button id="restartBtn" class="ghost" hidden>🔄 Restart</button>
+        <button id="resetBtn" class="ghost">Reset</button>
+      </div>
+
+      <div class="legend" aria-label="Miscue legend">
+        <span class="legend-item"><i class="legend-mis"></i> Mispronunciation</span>
+        <span class="legend-item"><i class="legend-om"></i> Omission</span>
+        <span class="legend-item"><i class="legend-sub"></i> Substitution</span>
+        <span class="legend-item"><i class="legend-rep"></i> Repetition</span>
+        <span class="legend-item"><i class="legend-trans"></i> Transposition</span>
+        <span class="legend-item"><i class="legend-rev"></i> Reversal</span>
+        <span class="legend-item"><i class="legend-self"></i> Self-correction</span>
+      </div>
+
+      <div class="bottom-row">
+        <div class="performance-metrics">
+          <div class="performance-card speed-card"><span>READING SPEED</span><strong id="wpm">—</strong><small>(Words Read &divide; Time in Seconds) &times; 60</small></div>
+          <div class="performance-card accuracy-card"><span>READING ACCURACY</span><strong id="readingAccuracy">—</strong><small>(Words − Miscues) &divide; Words &times; 100</small></div>
+        </div>
+        <div class="miscue-strip" id="miscueStrip" aria-label="Miscue counts"></div>
+      </div>
+
+      <dialog id="diagModal" class="diag-modal">
+        <div class="diag-modal-header">
+          <h3>Assessment Diagnostics</h3>
+          <button id="closeDiagBtn" class="ghost">Close</button>
+        </div>
+        <div id="diagContent" class="diag-modal-content">No assessment yet.</div>
+      </dialog>
+    </section>
+
+    <div id="tooltip" class="word-tooltip" role="tooltip" hidden></div>
+    <footer>Reference = story. Spoken sequence = OpenAI Realtime with soft passage context. Context never replaces the spoken sequence. All scoring markup = transcript side. Pronunciation evidence = Azure. Realtime transcript failure never becomes automatic omissions.</footer>
+  </main>
+  <script src="/assessment-core.js?v=4.5.36"></script>
+  <script src="/app.js?v=4.5.36"></script>
+</body>
+</html>

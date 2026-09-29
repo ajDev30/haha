@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mock Cascading Flow Test</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light p-4">
+
+<div id="app-container" style="max-width: 1200px; margin: 0 auto;">
+    <h3 class="text-center mt-4">Phil-IRI Assessment - MOCK MODE</h3>
+    <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">Phil-IRI Assesment</div>
+        <h1>Read aloud</h1>
+      </div>
+      <div class="top-actions">
+        <label class="locale-label" hidden>Language
+          <select id="locale">
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="en-PH">English (Philippines)</option>
+            <option value="fil-PH">Filipino (Philippines)</option>
+          </select>
+        </label>
+        <button id="diagBtn" class="ghost icon-btn" title="Diagnostics">⚙️</button>
+        <span class="status-pill" id="statusPill">Ready</span>
+      </div>
+    </header>
+
+    <section class="top-metrics" aria-label="Reading setup">
+      <div class="metric"><span>TIME</span><strong id="timer">00:00</strong></div>
+      <div class="metric"><span>STORY WORDS</span><strong id="storyWordCount">0</strong></div>
+            <button class="metric metric-button" id="editStoryBtn"><span>PASSAGE</span><strong>Edit</strong></button>
+    </section>
+      <!-- COMPREHENSION TEST -->
+      <div id="comprehension-section" class="card shadow-sm mt-4 d-none" style="border: 2px solid #0d6efd; border-radius: 8px;">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">📝 Comprehension Test</h4>
+        </div>
+        <div class="card-body" id="comprehension-questions">
+          <!-- JS will inject questions here -->
+        </div>
+        <div class="card-footer text-right">
+            <button id="submitTestBtn" class="btn btn-success btn-lg font-weight-bold shadow">Submit & Continue</button>
+        </div>
+      </div>
+
+
+    <section class="reader-card">
+      <div class="reader-toolbar">
+        <div class="toolbar-status">
+          <span class="dot" id="vadDot"></span>
+          <span id="hint">Ready. Press Start and read the passage.</span>
+        </div>
+        <div class="mic-meter" aria-label="Microphone activity"><div id="meterBar"></div></div>
+      </div>
+
+      <textarea id="storyEditor" class="story-editor" hidden></textarea>
+
+      <div class="reader-grid">
+        <section class="reading-pane" aria-label="Expected story">
+          <div class="pane-heading">
+            <div><span class="pane-kicker">EXPECTED STORY</span><span class="pane-sub">Reference passage · kept clean</span></div>
+            <span class="word-count-badge" id="wordBadge">0 words</span>
+          </div>
+          <article id="story" class="story">On a quiet Saturday morning, Maya walked to the old garden behind her grandmother’s house. The gate was covered with vines, but a narrow path still led to a small wooden bench. Maya sat there for a moment and listened to the birds singing in the trees. Then she noticed a tiny blue bird hopping beside a fallen flower. She waited patiently until the bird picked up a petal and carried it toward a nest. Maya smiled and realized that even in a familiar place, there could always be something new to discover.</article>
+        </section>
+
+        <section class="reading-pane transcript-pane" aria-label="Spoken transcript and Azure assessment">
+          <div class="pane-heading">
+            <div><span class="pane-kicker">TRANSCRIPT / AZURE</span><span class="pane-sub">OpenAI live transcript + Azure pronunciation evidence</span></div>
+            <span class="live-badge" id="liveBadge">Realtime</span>
+          </div>
+          <div id="transcript" class="transcript" aria-live="polite">
+            <span class="empty-state">Your spoken words will appear here while you read.</span>
+          </div>
+          <div id="transcriptNotice" class="transcript-notice" hidden></div>
+        </section>
+      </div>
+
+      <div class="action-buttons">
+        <button id="startBtn" class="primary">▶ Start</button>
+        <button id="stopBtn" class="secondary" disabled>⏹ Stop</button>
+        <button id="restartBtn" class="ghost" hidden>🔄 Restart</button>
+        <button id="resetBtn" class="ghost">Reset</button>
+      </div>
+
+      <div class="legend" aria-label="Miscue legend">
+        <span class="legend-item"><i class="legend-mis"></i> Mispronunciation</span>
+        <span class="legend-item"><i class="legend-om"></i> Omission</span>
+        <span class="legend-item"><i class="legend-sub"></i> Substitution</span>
+        <span class="legend-item"><i class="legend-rep"></i> Repetition</span>
+        <span class="legend-item"><i class="legend-trans"></i> Transposition</span>
+        <span class="legend-item"><i class="legend-rev"></i> Reversal</span>
+        <span class="legend-item"><i class="legend-self"></i> Self-correction</span>
+      </div>
+
+      <div class="bottom-row">
+        <div class="performance-metrics">
+          <div class="performance-card speed-card"><span>READING SPEED</span><strong id="wpm">—</strong><small>(Words Read &divide; Time in Seconds) &times; 60</small></div>
+          <div class="performance-card accuracy-card"><span>READING ACCURACY</span><strong id="readingAccuracy">—</strong><small>(Words − Miscues) &divide; Words &times; 100</small></div>
+        </div>
+        <div class="miscue-strip" id="miscueStrip" aria-label="Miscue counts"></div>
+      </div>
+
+      <dialog id="diagModal" class="diag-modal">
+        <div class="diag-modal-header">
+          <h3>Assessment Diagnostics</h3>
+          <button id="closeDiagBtn" class="ghost">Close</button>
+        </div>
+        <div id="diagContent" class="diag-modal-content">No assessment yet.</div>
+      </dialog>
+    </section>
+
+    <div id="tooltip" class="word-tooltip" role="tooltip" hidden></div>
+    <footer>Reference = story. Spoken sequence = OpenAI Realtime with soft passage context. Context never replaces the spoken sequence. All scoring markup = transcript side. Pronunciation evidence = Azure. Realtime transcript failure never becomes automatic omissions.</footer>
+  </main>
+</div>
+
+<script>
+// Mock PHP Data
+const API_TOKEN = "mock-token";
+const PASSAGES = {
+    "Independent": {
+        passage: "The quick brown fox jumps over the lazy dog. This is the easy independent test.",
+        questions_json: JSON.stringify([
+            { level_idx: 0, type: 'enumeration', text: 'Name 3 animals in the text', count: 3, answers: 'fox, dog, cat' }
+        ])
+    },
+    "Instructional": {
+        passage: "Photosynthesis is the process by which green plants transform light energy into chemical energy. This is instructional.",
+        questions_json: JSON.stringify([
+            { level_idx: 1, type: 'enumeration', text: 'What is transformed?', count: 2, answers: 'light energy, chemical energy' }
+        ])
+    },
+    "Frustration": {
+        passage: "Quantum entanglement is a physical phenomenon that occurs when a group of particles are generated or interact in ways such that the quantum state of each particle cannot be described independently. This is frustration.",
+        questions_json: JSON.stringify([
+            { level_idx: 2, type: 'multichoice', text: 'What phenomenon is this?', options: ['Quantum entanglement', 'Gravity', 'Photosynthesis'], correct: 0 }
+        ])
+    }
+};
+
+window.fetch = async (url, opts) => {
+    console.log("MOCK FETCH to " + url, opts);
+    return { json: async () => ({ status: 'success' }) };
+};
+</script>
+
+<script src="assessment-core.js"></script>
+<script src="app.js"></script>
+<script src="cascading-flow.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/readingassessment/db" VERSION="20231010" COMMENT="XMLDB file for Moodle mod_readingassessment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="readingassessment" COMMENT="Base table for the reading assessment instances">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="attempts_allowed" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    
+    <TABLE NAME="readingassessment_ext_prof" COMMENT="Profiles for external screening test">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="token" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="firstname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="middleinitial" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="lastname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="lrn" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="gender" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="email" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="section" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="age" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="grade_level" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="consent_agreed" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="classification" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="in_masterlist" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="readingassessment_ext_att" COMMENT="Attempts for external screening test">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="profileid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="level_idx" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="audio_path" TYPE="char" LENGTH="500" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="philiri_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="reading_speed" TYPE="number" LENGTH="10" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="comprehension_score" TYPE="number" LENGTH="10" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="accuracy_score" TYPE="number" LENGTH="10" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="miscues_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="answers_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="evaluation_data" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="classification" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="reading_time" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecompleted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="readingassessment_ext_pass" COMMENT="Passages for external screening test">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="grade_level" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="level_type" TYPE="char" LENGTH="50" NOTNULL="true" DEFAULT="Independent" SEQUENCE="false"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="passage" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="passage_2" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="passage_3" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="passage_4" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="questions_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="expiration_time" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="max_attempts" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="readingassessment_post_cfg" COMMENT="Post-test activity configuration">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Course module ID"/>
+        <FIELD NAME="passage_title" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="passage_text" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="passage_instructions" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="questions_json" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON array of question objects"/>
+        <FIELD NAME="tts_personality" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="OpenAI TTS personality prompt"/>
+        <FIELD NAME="tts_voice" TYPE="char" LENGTH="50" NOTNULL="false" DEFAULT="alloy" SEQUENCE="false"/>
+        <FIELD NAME="mastery_threshold" TYPE="int" LENGTH="3" NOTNULL="true" DEFAULT="80" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="cmid" UNIQUE="true" FIELDS="cmid"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="readingassessment_post_att" COMMENT="Post-test student attempts">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="cfgid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="audio_file_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Moodle files table itemid"/>
+        <FIELD NAME="transcript_raw" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="transcript_markup" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="HTML markup with miscue spans"/>
+        <FIELD NAME="azure_json" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Full Azure result JSON"/>
+        <FIELD NAME="assessment_json" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JS assessment object JSON"/>
+        <FIELD NAME="accuracy" TYPE="number" LENGTH="6" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="wpm" TYPE="number" LENGTH="8" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="comprehension" TYPE="number" LENGTH="6" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="comp_earned" TYPE="number" LENGTH="8" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="comp_total" TYPE="number" LENGTH="8" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="timestarted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecompleted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="cfgid" TYPE="foreign" FIELDS="cfgid" REFTABLE="readingassessment_post_cfg" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userid_cfgid" UNIQUE="false" FIELDS="userid, cfgid"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="readingassessment_post_resp" COMMENT="Questionnaire responses for post-test attempts">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="attid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Index into questions_json"/>
+        <FIELD NAME="answer_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="earned" TYPE="number" LENGTH="8" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="possible" TYPE="number" LENGTH="8" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="attid" TYPE="foreign" FIELDS="attid" REFTABLE="readingassessment_post_att" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="readingassessment_post_coach" COMMENT="Pronunciation coach practice attempts">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="attid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="target_word" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="phonemes_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="stage" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="whole/phoneme/blend/independent"/>
+        <FIELD NAME="azure_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="score" TYPE="number" LENGTH="6" DECIMALS="2" NOTNULL="false" DEFAULT="0.00" SEQUENCE="false"/>
+        <FIELD NAME="mastered" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="attid" TYPE="foreign" FIELDS="attid" REFTABLE="readingassessment_post_att" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+      <TABLE NAME="readingassessment_aral_set" COMMENT="ARAL settings and pre-scores">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="pre_score" TYPE="number" LENGTH="6" DECIMALS="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="pre_reading_level" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="calc_method" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="prog_calc_method" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userid_courseid" UNIQUE="true" FIELDS="userid, courseid"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="readingassessment_aral_act" COMMENT="ARAL activity records">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="activity_name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="activity_date" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="assessment_type" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="total_items" TYPE="number" LENGTH="8" DECIMALS="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="correct_answers" TYPE="number" LENGTH="8" DECIMALS="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="percentage_score" TYPE="number" LENGTH="6" DECIMALS="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="weight" TYPE="number" LENGTH="6" DECIMALS="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="oral_total_words" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="oral_miscues" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="oral_time_seconds" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="notes" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userid_courseid" UNIQUE="false" FIELDS="userid, courseid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

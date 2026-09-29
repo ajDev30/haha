@@ -1,0 +1,15 @@
+
+.env
+
+v536/.env
+
+v536/venv_asr/
+
+__pycache__/
+
+*.pyc
+
+*.log
+
+*.zip
+
